@@ -118,4 +118,7 @@ installLogger(
 	String(localStorage.CONSOLE)==='true' || location.href.match(/console/)
 );
 
-render(<App />, document.body);
+function App3() {
+	return <h1>Hello World</h1>;
+}
+render(<App3 />, document.body);
