@@ -137,5 +137,8 @@
       "path": "./dist/preact.js",
       "maxSize": "3Kb"
     }
-  ]
+  ],
+  "dependencies": {
+    "error-stack-parser": "^2.0.2"
+  }
 }
