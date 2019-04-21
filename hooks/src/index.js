@@ -1,4 +1,5 @@
 import { options } from 'preact';
+import { USE_STATE, USE_REDUCER, USE_EFFECT, USE_LAYOUT_EFFECT, USE_REF, USE_MEMO, USE_CALLBACK, USE_CONTEXT } from './constants';
 
 /** @type {number} */
 let currentIndex;
@@ -74,12 +75,12 @@ function getHookState(index) {
 }
 
 export function useState(initialState) {
-	dispatchHook(useState);
+	dispatchHook(USE_STATE);
 	return useReducer(invokeOrReturn, initialState);
 }
 
 export function useReducer(reducer, initialState, init) {
-	dispatchHook(useReducer);
+	dispatchHook(USE_REDUCER);
 
 	/** @type {import('./internal').ReducerHookState} */
 	const hookState = getHookState(currentIndex++);
@@ -107,7 +108,7 @@ export function useReducer(reducer, initialState, init) {
  * @param {any[]} args
  */
 export function useEffect(callback, args) {
-	dispatchHook(useEffect);
+	dispatchHook(USE_EFFECT);
 
 	/** @type {import('./internal').EffectHookState} */
 	const state = getHookState(currentIndex++);
@@ -125,7 +126,7 @@ export function useEffect(callback, args) {
  * @param {any[]} args
  */
 export function useLayoutEffect(callback, args) {
-	dispatchHook(useLayoutEffect);
+	dispatchHook(USE_LAYOUT_EFFECT);
 
 	/** @type {import('./internal').EffectHookState} */
 	const state = getHookState(currentIndex++);
@@ -137,7 +138,7 @@ export function useLayoutEffect(callback, args) {
 }
 
 export function useRef(initialValue) {
-	dispatchHook(useRef);
+	dispatchHook(USE_REF);
 
 	const state = getHookState(currentIndex++);
 	if (state._value == null) {
@@ -160,7 +161,7 @@ export function useImperativeHandle(ref, createHandle, args) {
  * @param {any[]} args
  */
 export function useMemo(callback, args) {
-	dispatchHook(useMemo);
+	dispatchHook(USE_MEMO);
 
 	/** @type {import('./internal').MemoHookState} */
 	const state = getHookState(currentIndex++);
@@ -178,7 +179,7 @@ export function useMemo(callback, args) {
  * @param {any[]} args
  */
 export function useCallback(callback, args) {
-	dispatchHook(useCallback);
+	dispatchHook(USE_CALLBACK);
 	return useMemo(() => callback, args);
 }
 
@@ -186,7 +187,7 @@ export function useCallback(callback, args) {
  * @param {import('./internal').PreactContext} context
  */
 export function useContext(context) {
-	dispatchHook(useContext);
+	dispatchHook(USE_CONTEXT);
 
 	const provider = currentComponent.context[context._id];
 	if (provider == null) return context._defaultValue;
