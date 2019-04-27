@@ -1,10 +1,11 @@
 import { setupRerender } from 'preact/test-utils';
 import { createElement, createElement as h, Fragment, options, Component, render } from 'preact';
-import { getDisplayName, setIn, isRoot, getData, shallowEqual, hasDataChanged, getChildren } from '../../src/devtools/custom';
+import { isRoot, getData, shallowEqual, hasDataChanged } from '../../src/devtools/custom';
+import { getChildren, getDisplayName } from '../../src/devtools/vnode';
 import { setupScratch, teardown, clearOptions } from '../../../test/_util/helpers';
 import { initDevTools } from '../../src/devtools';
 import { Renderer } from '../../src/devtools/renderer';
-import { memo, forwardRef, createPortal } from '../../../compat/src';
+import { createPortal } from '../../../compat/src';
 
 /** @jsx h */
 
@@ -200,7 +201,7 @@ describe('devtools', () => {
 			let a = createElement('div', { foo: 1 });
 
 			a._component = { _prevVNode: null };
-			expect(getChildren(a)).to.equal(null);
+			expect(getChildren(a)).to.deep.equal([]);
 
 			a._component._prevVNode = {};
 			expect(getChildren(a)).to.deep.equal([{}]);
