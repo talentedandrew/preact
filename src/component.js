@@ -86,8 +86,14 @@ Component.prototype.forceUpdate = function(callback) {
 		// 	}
 		// }
 
+		// TODO: Challenges
+		// 	* diffChildren copies vnodes with _dom (by calling coerceToVNode), breaking the referential
+		//		connection between this component's vnode and it's parent's _children array (or _prevVNode
+		//		if parent is component)
+		//	* Changing from `null` to `div` breaks cuz `vnode._dom` and therefore `oldDom` is null :'(. It needs
+		//		to be the next dom sibling of this VNode
 		const root = createElement(Fragment, {}, vnode);
-		diffChildren(parentDom, root, root, this._context, parentDom.ownerSVGElement!==undefined, null, mounts, this._ancestorComponent, parentDom.firstChild, force);
+		diffChildren(parentDom, root, root, this._context, parentDom.ownerSVGElement!==undefined, null, mounts, this._ancestorComponent, dom, force);
 
 		commitRoot(mounts, vnode);
 	}
